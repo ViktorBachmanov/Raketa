@@ -16,6 +16,7 @@ return new class extends Migration
                     ->constrained()
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();
+            $table->unsignedBigInteger('manager_id')->nullable();
         });
     }
 
@@ -25,7 +26,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropForeign(['role_id']);
+            $table->dropColumn('manager_id');
         });
     }
 };

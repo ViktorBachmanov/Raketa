@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use App\Models\Role;
+use App\Enums\Role as RoleEnum;
 
 
 class RoleSeeder extends Seeder
@@ -17,12 +18,12 @@ class RoleSeeder extends Seeder
     {
         Role::firstOrCreate(
             ['id' => 1],
-            ['name' => 'manager']
+            ['name' => RoleEnum::Manager->value]
         );
 
         Role::firstOrCreate(
             ['id' => 2],
-            ['name' => 'employee']
+            ['name' => RoleEnum::Employee->value]
         );
     }
 }
