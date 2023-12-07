@@ -24,7 +24,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        
+
         Validator::make($input, [
             'email' => [
                 'required',
@@ -42,6 +42,7 @@ class EmployeeController extends Controller
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'role_id' => $employeeRole->id,
+            'manager_id' => $request->user()->id,
         ]);
     }
 }

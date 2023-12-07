@@ -21,6 +21,11 @@ return new class extends Migration
                     ->constrained()
                     ->cascadeOnUpdate()
                     ->restrictOnDelete();  
+            $table->foreignId("user_id")
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();  
 
             $table->timestamps();
         });

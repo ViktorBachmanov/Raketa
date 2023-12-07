@@ -18,9 +18,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the products
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $request->user()->getAccessibleProducts();
     }
 
     
@@ -44,6 +44,7 @@ class ProductController extends Controller
         return Product::create([
             'name' => $input['name'],
             'category_id' => $category->id,
+            'user_id' => $request->user()->id,
             'image' => $imagePath,
         ]);
     }

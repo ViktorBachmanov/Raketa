@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Enums\Role as RoleEnum;
 use App\Models\Role;
+use App\Models\Product;
 
 
 class User extends Authenticatable
@@ -64,5 +66,29 @@ class User extends Authenticatable
     public function isManager(): bool
     {
         return $this->role->name === RoleEnum::Manager->value;
+    }
+
+    public function getAccessibleProducts()
+    {
+        if ($this->isManager()) {
+            return $this->employees()->reduce(function ($allProducts, $employee) {
+                return $allProducts->concat($employee->products);
+            }, collect([]));
+        } else {
+            return $this->products;
+        }
+    }
+
+    private function employees()
+    {
+        return self::where('manager_id', $this->id)->get();
+    }
+
+    /**
+     * Get the products for the user
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }
