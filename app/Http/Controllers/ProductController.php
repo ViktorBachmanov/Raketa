@@ -34,7 +34,7 @@ class ProductController extends Controller
         Validator::make($input, [
             'name' => 'required|string',
             'category' => ['required', Rule::enum(CategoryEnum::class)],
-            'image' => 'file',
+            'image' => 'image',
         ])->validate();
 
         $category = Category::firstWhere('name', $input['category']);
