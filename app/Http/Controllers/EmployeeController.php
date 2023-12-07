@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Actions\Fortify;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Laravel\Fortify\Contracts\CreatesNewUsers;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Enums\Role as RoleEnum;
 use App\Models\Role;
 
 
-class CreateNewUser implements CreatesNewUsers
+class EmployeeController extends Controller
 {
     use PasswordValidationRules;
 
     /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
+     * Store a newly created employee
      */
-    public function create(array $input): User
+    public function store(Request $request)
     {
+        $input = $request->all();
+        
         Validator::make($input, [
             'email' => [
                 'required',
@@ -34,13 +36,12 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        $managerRole = Role::firstWhere('name', RoleEnum::Manager->value);
+        $employeeRole = Role::firstWhere('name', RoleEnum::Employee->value);
 
         return User::create([
-            'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'role_id' => $managerRole->id,
+            'role_id' => $employeeRole->id,
         ]);
     }
 }
