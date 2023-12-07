@@ -21,7 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::post('/register-manager', [Laravel\Fortify\Http\Controllers\RegisteredUserController::class, 'store']);
-Route::post('/register-employee', [EmployeeController::class, 'store'])->middleware(['auth:sanctum', 'isManager']);
-Route::post('/products', [ProductController::class, 'store'])->middleware('auth:sanctum');
-Route::get('/products', [ProductController::class, 'index'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/register-employee', [EmployeeController::class, 'store'])->middleware('isManager');
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::get('/products', [ProductController::class, 'index']);
+});
+
+
