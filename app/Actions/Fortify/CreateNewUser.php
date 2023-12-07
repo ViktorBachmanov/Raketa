@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
+use App\Enums\Role as RoleEnum;
+use App\Models\Role;
+
+
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
@@ -29,12 +33,19 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'role' => ['required', Rule::enum(RoleEnum::class)],
         ])->validate();
+
+        $role = Role::firstWhere('name', $input['role']);
+        if ($role === null) {
+            abort(500, 'Role error');
+        }
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'role_id' => $role->id,
         ]);
     }
 }
