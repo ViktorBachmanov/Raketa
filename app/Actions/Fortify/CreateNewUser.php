@@ -34,7 +34,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        $managerRole = Role::firstWhere('name', RoleEnum::Manager->value);
+        $managerRole = Role::firstWhere('name', RoleEnum::Manager);
 
         return User::create([
             'name' => $input['name'] ?? null,

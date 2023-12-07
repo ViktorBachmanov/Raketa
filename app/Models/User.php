@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function isManager(): bool
     {
-        return $this->role->name === RoleEnum::Manager->value;
+        return $this->role->name === RoleEnum::Manager;
     }
 
     public function getAccessibleProducts()

@@ -36,7 +36,7 @@ class EmployeeController extends Controller
             'password' => $this->passwordRules(),
         ])->validate();
 
-        $employeeRole = Role::firstWhere('name', RoleEnum::Employee->value);
+        $employeeRole = Role::firstWhere('name', RoleEnum::Employee);
 
         return User::create([
             'email' => $input['email'],

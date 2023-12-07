@@ -18,12 +18,12 @@ class RoleSeeder extends Seeder
     {
         Role::firstOrCreate(
             ['id' => 1],
-            ['name' => RoleEnum::Manager->value]
+            ['name' => RoleEnum::Manager]
         );
 
         Role::firstOrCreate(
             ['id' => 2],
-            ['name' => RoleEnum::Employee->value]
+            ['name' => RoleEnum::Employee]
         );
     }
 }
