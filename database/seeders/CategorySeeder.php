@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use App\Models\Category;
+use App\Enums\Category as CategoryEnum;
 
 
 class CategorySeeder extends Seeder
@@ -17,27 +18,27 @@ class CategorySeeder extends Seeder
     {
         Category::firstOrCreate(
             ['id' => 1],
-            ['name' => 'Столы']
+            ['name' => CategoryEnum::Tables->value]
         );
 
         Category::firstOrCreate(
             ['id' => 2],
-            ['name' => 'Стулья']
+            ['name' => CategoryEnum::Chairs->value]
         );
 
         Category::firstOrCreate(
             ['id' => 3],
-            ['name' => 'Банкетки']
+            ['name' => CategoryEnum::Banquettes->value]
         );
 
         Category::firstOrCreate(
             ['id' => 4],
-            ['name' => 'Комоды']
+            ['name' => CategoryEnum::Commodes->value]
         );
 
         Category::firstOrCreate(
             ['id' => 5],
-            ['name' => 'Стеллажи']
+            ['name' => CategoryEnum::Stacks->value]
         );
     }
 }
